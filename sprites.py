@@ -80,3 +80,8 @@ class Button(MenuComponent):
         if hasattr(self, "text"):
             self.add_text()
             self.surface.blit(self.text, self.pos)
+
+
+class Static(pg.sprite.Sprite):
+    def __init__(self):
+        pass
