@@ -1,7 +1,7 @@
 import pygame as pg
 
 
-from config import TITLE, SCREENSIZE, FPS, BG_COLOUR
+from config import TITLE, SCREENSIZE, FPS, BG_COLOUR, WHITE
 
 
 class Game:
@@ -25,6 +25,7 @@ class Game:
 
     def game_loop(self):
         while self.playing:
+            self.level.start()
             self.check_events()
             self.display.fill(BG_COLOUR)
             self.screen.blit(self.display, (0, 0))
@@ -35,5 +36,10 @@ class Game:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.running, self.playing = False, False
+                self.level.inLevel = False
             if event.type == pg.MOUSEBUTTONDOWN:
                 self.running, self.playing = True, False
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    self.playing = False
+                    self.level.inLevel = False
