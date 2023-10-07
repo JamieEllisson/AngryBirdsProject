@@ -20,26 +20,27 @@ class Menu:
                 for element in self.components:
                     if isinstance(element, Button):
                         if element.isHovered():
-                            if element.action == "back":
-                                self.game.current_menu = self.game.main_menu
-                                self.show_display = False
-                            if element.action == "settings":
-                                self.game.current_menu = self.game.settings_menu
-                                self.show_display = False
-                            if element.action == "quit":
-                                self.game.running = False
-                                self.show_display = False
-                            if element.action == "play":
-                                self.game.current_menu = self.game.level_menu
-                                self.show_display = False
-                            if element.action == "level1":
-                                self.game.level_pointer = 1
-                                self.game.playing = True
-                                self.show_display = False
-                            if element.action == "level2":
-                                self.game.level_pointer = 2
-                                self.game.playing = True
-                                self.show_display = False
+                            match element.action:
+                                case "play":
+                                    self.game.current_menu = self.game.level_menu
+                                    self.show_display = False
+                                case "settings":
+                                    self.game.current_menu = self.game.settings_menu
+                                    self.show_display = False
+                                case "quit":
+                                    self.game.running = False
+                                    self.show_display = False
+                                case "back":
+                                    self.game.current_menu = self.game.main_menu
+                                    self.show_display = False
+                                case "level1":
+                                    self.game.level_pointer = 1
+                                    self.game.playing = True
+                                    self.show_display = False
+                                case "level2":
+                                    self.game.level_pointer = 2
+                                    self.game.playing = True
+                                    self.show_display = False
 
     def draw_menu(self):
         i = 0
