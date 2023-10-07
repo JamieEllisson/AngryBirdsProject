@@ -5,7 +5,7 @@ from config import TITLE, SCREENSIZE, FPS, BG_COLOUR
 
 class Game:
     def __init__(self):
-        from menu import MainMenu, SettingsMenu
+        from menu import MainMenu, SettingsMenu, LevelMenu
 
         pg.init()
         self.screen = pg.display.set_mode(SCREENSIZE)
@@ -15,7 +15,10 @@ class Game:
         self.running, self.playing = True, False
         self.main_menu = MainMenu(self)
         self.settings_menu = SettingsMenu(self)
-        self.isMainMenu = True
+        self.level_menu = LevelMenu(self)
+        self.current_menu = self.main_menu
+
+        self.level_pointer = 0
 
     def game_loop(self):
         while self.playing:
