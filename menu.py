@@ -36,10 +36,12 @@ class Menu:
                                 case "level1":
                                     self.game.level_pointer = 1
                                     self.game.playing = True
+                                    self.game.current_menu = self.game.main_menu
                                     self.show_display = False
                                 case "level2":
                                     self.game.level_pointer = 2
                                     self.game.playing = True
+                                    self.game.current_menu = self.game.main_menu
                                     self.show_display = False
 
     def draw_menu(self):
