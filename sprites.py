@@ -2,7 +2,8 @@ import pygame as pg
 import pymunk as pm
 
 from helper import *
-from config import FONT_PATH, WHITE, BLACK, RED, GREEN, GREY
+from pymunk import Vec2d
+from config import BLUE, FONT_PATH, WHITE, BLACK, RED, GREEN, GREY
 
 
 class MenuComponent(pg.sprite.Sprite):
@@ -113,6 +114,27 @@ class Floor(Static):
         )
 
 
+class Block(pg.sprite.Sprite):
+    def __init__(self, surface, space, pos, width, height, mass=15):
+        pg.sprite.Sprite.__init__(self)
+        self.surface = surface
+        self.body = pm.Body()
+        self.body.position = pos
+        self.shape = pm.Poly.create_box(self.body, (width, height))
+        self.shape.mass = mass
+        self.shape.elasticity = 0.65
+        self.shape.friction = 0.4
+        space.add(self.body, self.shape)
+
+    def draw(self):
+        points = []
+        for v in self.shape.get_vertices():
+            points.append(
+                PymunkToPygame(v.rotated_degrees(self.body.angle) + self.body.position)
+            )
+        pg.draw.polygon(self.surface, BLUE, points)
+
+
 class Ball(pg.sprite.Sprite):
     def __init__(self, surface, space, pos, mass=5):
         pg.sprite.Sprite.__init__(self)
@@ -125,6 +147,10 @@ class Ball(pg.sprite.Sprite):
         self.shape.elasticity = 0.65
         self.shape.friction = 0.4
         space.add(self.body, self.shape)
+
+    def shoot(self, power):
+        impulse = power * Vec2d(1, 0)
+        self.body.apply_impulse_at_local_point(impulse)
 
     def draw(self):
         self.pos = PymunkToPygame(self.body.position)
